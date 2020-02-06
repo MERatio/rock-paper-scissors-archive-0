@@ -4,9 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
     <title>Rock Paper Scissors</title>
   </head>
   <body>
+    <main class="container">
+      <div class="info">
+        <div class="player">
+          <p class="player-label blue-text">Player</p>
+          <p class="player-score-dom">0</p>
+        </div>
+        <div class="round">
+          <p class="round-label">Round</p>
+          <p class="round-text">
+            <span class="round-current-dom">1</span> of
+            <span class="round-limit-dom"></span>
+          </p>
+        </div>
+        <div class="computer">
+          <p class="computer-label red-text">Computer</p>
+          <p class="computer-score-dom">0</p>
+        </div>
+      </div>
+      <div class="result">
+        <p class="result-text">Select your choice</p>
+      </div>
+      <div class="stage">
+        <i id="rock" class="choice far fa-hand-rock fa-4x has-hover"></i>
+        <i id="paper" class="choice far fa-hand-paper fa-4x has-hover"></i>
+        <i
+          id="scissors"
+          class="choice far fa-hand-scissors fa-4x has-hover"
+        ></i>
+      </div>
+      <div class="setting">
+        <button class="btn reset-game">Reset Game</button>
+      </div>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>
