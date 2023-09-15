@@ -40,17 +40,19 @@ function playRound(playerChoice, computerChoice) {
 	const lcPlayerChoice = playerChoice.toLowerCase();
 	if (lcPlayerChoice === computerChoice) {
 		updateScore('none');
-		return "It's a tie!";
+		console.log("It's a tie!");
 	} else if (
 		(lcPlayerChoice === 'rock' && computerChoice === 'scissors') ||
 		(lcPlayerChoice === 'paper' && computerChoice === 'rock') ||
 		(lcPlayerChoice === 'scissors' && computerChoice === 'paper')
 	) {
 		updateScore('player');
-		return `You Win! ${capitalize(playerChoice)} beats ${computerChoice}`;
+		console.log(`You Win! ${capitalize(playerChoice)} beats ${computerChoice}`);
 	} else {
 		updateScore('computer');
-		return `You Lose! ${capitalize(playerChoice)} loses to ${computerChoice}`;
+		console.log(
+			`You Lose! ${capitalize(playerChoice)} loses to ${computerChoice}`,
+		);
 	}
 }
 
@@ -74,7 +76,7 @@ function game() {
 			return;
 		}
 		const computerChoice = getComputerChoice();
-		console.log(playRound(playerChoice, computerChoice));
+		playRound(playerChoice, computerChoice);
 	}
 
 	const gameResult = getGameResult(scores);
