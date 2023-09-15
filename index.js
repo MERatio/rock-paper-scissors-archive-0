@@ -32,39 +32,25 @@ function updateScore(winner) {
 	scores[winner]++;
 }
 
+function capitalize(str) {
+	return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}
+
 function playRound(playerChoice, computerChoice) {
 	const lcPlayerChoice = playerChoice.toLowerCase();
 	if (lcPlayerChoice === computerChoice) {
 		updateScore('none');
 		return "It's a tie!";
-	}
-	switch (lcPlayerChoice) {
-		case 'rock':
-			if (computerChoice === 'paper') {
-				updateScore('computer');
-				return 'You Lose! Rock loses to paper';
-			} else {
-				updateScore('player');
-				return 'You Win! Rock beats scissors';
-			}
-			break;
-		case 'paper':
-			if (computerChoice === 'rock') {
-				updateScore('player');
-				return 'You Win! Paper beats rock';
-			} else {
-				updateScore('computer');
-				return 'You Lose! Paper loses to scissors';
-			}
-			break;
-		case 'scissors':
-			if (computerChoice === 'rock') {
-				updateScore('computer');
-				return 'You Lose! Scissors loses to rock';
-			} else {
-				updateScore('player');
-				return 'You Win! Scissors beats paper';
-			}
+	} else if (
+		(lcPlayerChoice === 'rock' && computerChoice === 'scissors') ||
+		(lcPlayerChoice === 'paper' && computerChoice === 'rock') ||
+		(lcPlayerChoice === 'scissors' && computerChoice === 'paper')
+	) {
+		updateScore('player');
+		return `You Win! ${capitalize(playerChoice)} beats ${computerChoice}`;
+	} else {
+		updateScore('computer');
+		return `You Lose! ${capitalize(playerChoice)} loses to ${computerChoice}`;
 	}
 }
 
