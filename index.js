@@ -1,13 +1,27 @@
 'use strict';
 
+const CHOICES = ['rock', 'paper', 'scissors'];
+
 const scores = {
 	player: 0,
 	computer: 0,
 };
 
+function getPlayerChoice() {
+	let playerChoice;
+
+	do {
+		playerChoice = prompt('Rock, paper, or scissors?');
+		if (playerChoice === null) {
+			return null;
+		}
+	} while (!CHOICES.includes(playerChoice.toLowerCase()));
+
+	return playerChoice;
+}
+
 function getComputerChoice() {
-	const choices = ['rock', 'paper', 'scissors'];
-	const choice = choices[Math.floor(Math.random() * choices.length)];
+	const choice = CHOICES[Math.floor(Math.random() * CHOICES.length)];
 	return choice;
 }
 
@@ -69,7 +83,10 @@ function getGameResult(scores) {
 
 function game() {
 	for (let i = 0; i < 5; i++) {
-		const playerSelection = prompt('Rock, paper, or scissors?');
+		const playerSelection = getPlayerChoice();
+		if (playerSelection === null) {
+			return;
+		}
 		const computerSelection = getComputerChoice();
 		console.log(playRound(playerSelection, computerSelection));
 	}
