@@ -1,26 +1,15 @@
 'use strict';
 
-const CHOICES = ['rock', 'paper', 'scissors'];
+let scores;
 
-const scores = {
-	player: 0,
-	computer: 0,
-};
-
-function getPlayerChoice() {
-	let playerChoice;
-
-	do {
-		playerChoice = prompt('Rock, paper, or scissors?');
-		if (playerChoice === null) {
-			return null;
-		}
-	} while (!CHOICES.includes(playerChoice.toLowerCase()));
-
-	return playerChoice;
-}
+const playerScore = document.querySelector('.player-score');
+const computerScore = document.querySelector('.computer-score');
+const result = document.querySelector('.result');
+const choicesBtn = document.querySelectorAll('.choice');
+const resetBtn = document.querySelector('.reset');
 
 function getComputerChoice() {
+	const CHOICES = ['rock', 'paper', 'scissors'];
 	const choice = CHOICES[Math.floor(Math.random() * CHOICES.length)];
 	return choice;
 }
@@ -30,6 +19,8 @@ function updateScore(winner) {
 		return;
 	}
 	scores[winner]++;
+	playerScore.textContent = scores.player;
+	computerScore.textContent = scores.computer;
 }
 
 function capitalize(str) {
@@ -40,47 +31,61 @@ function playRound(playerChoice, computerChoice) {
 	const lcPlayerChoice = playerChoice.toLowerCase();
 	if (lcPlayerChoice === computerChoice) {
 		updateScore('none');
-		console.log("It's a tie!");
+		result.textContent = "It's a tie!";
 	} else if (
 		(lcPlayerChoice === 'rock' && computerChoice === 'scissors') ||
 		(lcPlayerChoice === 'paper' && computerChoice === 'rock') ||
 		(lcPlayerChoice === 'scissors' && computerChoice === 'paper')
 	) {
 		updateScore('player');
-		console.log(`You Win! ${capitalize(playerChoice)} beats ${computerChoice}`);
+		result.textContent = `You Win! ${capitalize(
+			playerChoice,
+		)} beats ${computerChoice}`;
 	} else {
 		updateScore('computer');
-		console.log(
-			`You Lose! ${capitalize(playerChoice)} loses to ${computerChoice}`,
-		);
+		result.textContent = `You Lose! ${capitalize(
+			playerChoice,
+		)} loses to ${computerChoice}`;
 	}
 }
 
 function getGameResult(scores) {
-	let result = '--------------------------------------------------';
-	result += `\nFinal scores: player: ${scores.player} - computer: ${scores.computer}`;
 	if (scores.player > scores.computer) {
-		result += '\nPlayer wins!';
-	} else if (scores.computer > scores.player) {
-		result += '\nComputer wins!';
+		return '\nPlayer wins!';
 	} else {
-		result += '\nNo one wins!';
+		return '\nComputer wins!';
 	}
-	return result;
 }
 
-function game() {
-	for (let i = 0; i < 5; i++) {
-		const playerChoice = getPlayerChoice();
-		if (playerChoice === null) {
-			return;
-		}
+function disableNodes(nodes, bool = true) {
+	nodes.forEach((node) => (node.disabled = bool));
+}
+
+function init() {
+	scores = {
+		player: 0,
+		computer: 0,
+	};
+	playerScore.textContent = scores.player;
+	computerScore.textContent = scores.computer;
+	result.innerHTML = '&nbsp';
+	disableNodes(choicesBtn, false);
+}
+
+choicesBtn.forEach((choiceBtn) => {
+	choiceBtn.addEventListener('click', (e) => {
+		const playerChoice = e.currentTarget.dataset.choice;
 		const computerChoice = getComputerChoice();
 		playRound(playerChoice, computerChoice);
-	}
 
-	const gameResult = getGameResult(scores);
-	console.log(gameResult);
-}
+		if (scores.player === 5 || scores.computer === 5) {
+			const gameResult = getGameResult(scores);
+			result.textContent = gameResult;
+			disableNodes(choicesBtn);
+		}
+	});
+});
 
-game();
+resetBtn.addEventListener('click', init);
+
+init();
