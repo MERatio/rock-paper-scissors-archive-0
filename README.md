@@ -1,4 +1,4 @@
-# Landing Page
+# Rock Paper Scissors
 
 Classic rock paper scissors game against a computer.
 
